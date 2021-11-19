@@ -58,7 +58,26 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  const keys=Array.from(document.querySelectorAll('.key'));
+  console.log(keys)
+  keys.forEach(key=>{
 
+   
+    key.addEventListener('transitionend',(event)=>{
+      if(event.propertyName!=='transform') return;
+      // console.log(event.target);
+      event.target.classList.remove('playing');//清除样式
+    })
+  }) 
+  window.addEventListener('keydown',(event)=>{
+      //获取相关的属性和音频
+      const audio=document.querySelector(`audio[data-key="${event.keyCode}"]`);
+      const keyDiv=document.querySelector(`div[data-key="${event.keyCode}"]`);
+      if(!audio) return;//如果按下键盘的按键不是我们所期望的按键，什么都不做
+      keyDiv.classList.add('playing');//修改key的样式
+      audio.currentTime=0;
+      audio.play();
+    })
 </script>
 
 
